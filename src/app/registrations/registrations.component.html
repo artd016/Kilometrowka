@@ -1,0 +1,44 @@
+<mat-toolbar color="primary">
+  <button mat-button [disabled]="selected==undefined" [attr.name]="selected!=undefined" 
+  (click)="sidenav.toggle()">
+    <mat-icon>
+      menu
+    </mat-icon>
+  </button>
+    <span routerLink="/">
+            Kilometrówka
+    </span>
+    <mat-form-field style="font-size: 20px;">
+        <mat-select placeholder="Selected car" [(ngModel)]="selected" name="vehicle" routerLink="/summary/{{selected}}">
+
+          <mat-option *ngFor="let vehicle of vehiclesList" [(value)]="vehicle.$key">
+            {{ vehicle.brand }} {{ vehicle.model }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    <button mat-icon-button [mat-menu-trigger-for]="menu">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+</mat-toolbar>
+
+<mat-menu x-position="before" #menu="matMenu">
+    <button mat-menu-item (click)="openDialog()">Dodaj nowy pojazd</button>
+</mat-menu>
+
+<mat-sidenav-container>
+  <mat-sidenav position="start" mode="side" #sidenav>
+      
+    <button mat-menu-item>Dodaj poniesione koszty z pojazdem</button>
+    <button mat-menu-item>Wyświetl wszystkie wpisy</button>
+
+  </mat-sidenav>
+<div *ngIf="selected">
+
+  
+      <router-outlet></router-outlet>
+  </div>
+
+  <p>{{vehiclesList}}</p>
+  <p>{{vehiclesList | json}}</p>
+  
+</mat-sidenav-container>

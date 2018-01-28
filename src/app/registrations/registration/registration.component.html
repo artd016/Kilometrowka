@@ -1,0 +1,44 @@
+<mat-card>
+  <form #registrationForm="ngForm" (ngSubmit)="onSubmit(registrationForm)">
+  <input type="hidden" name="$key" #$key="ngModel" [(ngModel)]="registrationService.selectedRegistration.$key">
+    <p>
+      <mat-form-field>
+          <input matInput  placeholder="Choose a date" name="date"
+           #name="ngModel" 
+           [matDatepicker]="picker"
+
+           [(ngModel)]="registrationService.selectedRegistration.date">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </p>
+      <p>
+      <mat-form-field>
+          <input matInput type="text" placeholder="Cel wyjazdu" name="purpose" #name="ngModel" 
+          [(ngModel)]="registrationService.selectedRegistration.purpose" />
+          <!-- [formControl]="emailFormControl"
+          [errorStateMatcher]="matcher" -->
+        <!-- <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" >
+          <mat-icon>close</mat-icon>
+        </button> -->
+        <!-- <mat-error *ngIf="emailFormControl.hasError('required')">
+            Email is <strong>required</strong>
+          </mat-error> -->
+      </mat-form-field>
+      </p>
+      <p>
+    <mat-form-field>
+      <input matInput type="number" placeholder="Stan licznika początkowy" name="initial_odometer" #name="ngModel" 
+      [(ngModel)]="registrationService.selectedRegistration.initial_odometer" />
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field>
+      <input matInput type="number" placeholder="Stan licznika końcowy" name="final_odometer" #name="ngModel" 
+      [(ngModel)]="registrationService.selectedRegistration.final_odometer"/>
+    </mat-form-field>
+  </p>
+  
+  <button mat-raised-button color="primary">Zapisz</button>
+</form>
+</mat-card>
