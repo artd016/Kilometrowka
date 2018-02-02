@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { RegistrationService } from '../../shared/registration.service';
 
 @Component({
   selector: 'app-summary',
@@ -8,11 +9,16 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class SummaryComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute) { }
+  stateCosts: any;
+  vehicle_key: any;
+  constructor(private route: ActivatedRoute,
+              private registrationService: RegistrationService) { }
 
   ngOnInit() {
-    const key = +this.route.snapshot.paramMap.get('key');
-    console.log(key);
+
+    this.stateCosts = this.registrationService.stateCosts;
+
   }
+
 
 }

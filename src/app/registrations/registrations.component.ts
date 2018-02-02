@@ -2,7 +2,8 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
 import { RegistrationService } from '../shared/registration.service';
-import { Registration } from '../shared/registration.model';
+import { Registration, Vehicle } from '../shared/registration.model';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 @Component({
   selector: 'app-registrations',
@@ -12,43 +13,58 @@ import { Registration } from '../shared/registration.model';
 })
 export class RegistrationsComponent implements OnInit {
 
-  selected: string;
+  private _selected: String;
 
-  vehiclesList : any[];
+  get selected(): String {
+    return this._selected;
+}
 
-  constructor(private registrationService : RegistrationService,
+set selected(value: String) {
+   // if (value === undefined) throw 'Please supply time interval';
+    this._selected = value;
+    console.log(value);
+
+    const vehicle = this.vehiclesList.reduce(x => x.$key === value);
+
+    this.registrationService.stateCosts = vehicle.stateCosts;
+    this.registrationService.vehicle_key = vehicle.$key;
+    this.router.navigate([`/summary`]);
+}
+
+  stateCosts: any;
+  vehiclesList: any[];
+
+  constructor(private registrationService: RegistrationService,
+              private router: Router,
               public dialog: MatDialog) { }
 
   ngOnInit() {
 
-    var x = this.registrationService.getVehicles();
-    x.snapshotChanges().subscribe(item =>
-   {
+    const vehicles = this.registrationService.getVehicles();
+    vehicles.snapshotChanges().subscribe(item => {
      this.vehiclesList = [];
-     item.forEach(element =>{
-         var y = element.payload.toJSON();
-         y["$key"] = element.key;
+     item.forEach(element => {
+         const y = element.payload.toJSON();
+         y['$key'] = element.key;
          this.vehiclesList.push(y);
      });
    });
   }
 
   openDialog(): void {
-    let dialogRef = this.dialog.open(VehicleDialogComponent, {
+    const dialogRef = this.dialog.open(VehicleDialogComponent, {
       width: '250px',
-      data:{ /*this.realEstateWebsiteService.selectedRealEstateWebsite*/ }
+      data: { /*this.realEstateWebsiteService.selectedRealEstateWebsite*/ }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      
+
       console.log(result);
 
-      if(result != undefined)
-      {
+      if (result !== undefined) {
           this.registrationService.insertVehicle(result);
       }
-      //console.log(result.url);
     });
   }
 
@@ -68,7 +84,7 @@ export class RegistrationsComponent implements OnInit {
     [(ngModel)]="data.model">
   </mat-form-field>
   </mat-dialog-content>
-  
+
   <div mat-dialog-actions>
     <button mat-button [mat-dialog-close]="data" tabindex="2">
     Ok

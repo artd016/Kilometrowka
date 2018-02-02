@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {AngularFireList} from 'angularfire2/database';
 import {MatTableDataSource} from '@angular/material';
 
-import { RegistrationService } from '../../shared/registration.service'
-import { Registration } from '../../shared/registration.model'
+import { RegistrationService } from '../../shared/registration.service';
+import { Registration } from '../../shared/registration.model';
 
 
 @Component({
@@ -16,23 +16,22 @@ export class RegistrationListComponent implements OnInit {
 
   // displayedColumns = ['position', 'name', 'weight', 'symbol'];
   // dataSource = new MatTableDataSource<Element>(ELEMENT_DATA);
-  registrationList : Registration[];
-  constructor(private registrationService : RegistrationService) { }
+  registrationList: Registration[];
+  constructor(private registrationService: RegistrationService) { }
 
   ngOnInit() {
-   var x = this.registrationService.getData();
-   x.snapshotChanges().subscribe(item =>
-  {
+   const registrationToApprove = this.registrationService.getRegistrationToApprove();
+   registrationToApprove.snapshotChanges().subscribe(item => {
     this.registrationList = [];
-    item.forEach(element =>{
-        var y = element.payload.toJSON();
-        y["$key"] = element.key;
+    item.forEach(element => {
+        const y = element.payload.toJSON();
+        y['$key'] = element.key;
         this.registrationList.push(y as Registration);
     });
   });
   }
 
-onItemClick(reg: Registration){
+onItemClick(reg: Registration) {
     this.registrationService.selectedRegistration = Object.assign({}, reg);
   }
 

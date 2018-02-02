@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
 import {ErrorStateMatcher} from '@angular/material/core';
+import { Router } from '@angular/router';
 
-import { RegistrationService } from '../../shared/registration.service'
+import { RegistrationService } from '../../shared/registration.service';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -25,33 +26,40 @@ export class RegistrationComponent implements OnInit {
 
   // matcher = new MyErrorStateMatcher();
 
-  constructor(private registrationService : RegistrationService) { }
+  vehicle_key: any;
 
-  ngOnInit() 
-  {
+  constructor(private registrationService: RegistrationService, private router: Router) { }
+
+  ngOnInit() {
     this.resetForm();
+    this.vehicle_key = this.registrationService.vehicle_key;
   }
 
-  onSubmit(form : NgForm)
-  {
-    if(form.value.$key == '')
-      this.registrationService.insertRegistration(form.value);
-    else
-    this.registrationService.updateRegistration(form.value);
+  onSubmit(form: NgForm) {
+    if (form.value.$key === '') {
+      this.registrationService.insertRegistration(form.value, this.vehicle_key);
+      this.router.navigate(['/summary']);
+    } else {
+      this.registrationService.updateRegistration(form.value);
+    }
+
     this.resetForm(form);
   }
 
-  resetForm(form? : NgForm)
-  {
-    if(form != null)
+  resetForm(form?: NgForm) {
+    if (form != null) {
       form.reset();
+    }
+
     this.registrationService.selectedRegistration = {
       $key: '',
       date: null,
       purpose: '',
+      fromWhere: '',
+      toWhere: '',
       initial_odometer: 0,
       final_odometer: 0
-    }
+    };
   }
 
 }

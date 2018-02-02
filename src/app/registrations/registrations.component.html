@@ -1,17 +1,19 @@
 <mat-toolbar color="primary">
-  <button mat-button [disabled]="selected==undefined" [attr.name]="selected!=undefined" 
+  <button mat-button [disabled]="selected==undefined" [attr.name]="selected!=undefined"
   (click)="sidenav.toggle()">
     <mat-icon>
       menu
     </mat-icon>
   </button>
-    <span routerLink="/">
-            Kilometrówka
-    </span>
-    <mat-form-field style="font-size: 20px;">
-        <mat-select placeholder="Selected car" [(ngModel)]="selected" name="vehicle" routerLink="/summary/{{selected}}">
 
-          <mat-option *ngFor="let vehicle of vehiclesList" [(value)]="vehicle.$key">
+      <span routerLink="/" [hidden]="selected">Kilometrówka</span>
+      <span routerLink="/summary" [hidden]="!selected">Kilometrówka</span>
+
+
+    <mat-form-field style="font-size: 20px;">
+        <mat-select placeholder="Selected car" [(ngModel)]="selected" name="vehicle">
+
+          <mat-option *ngFor="let vehicle of vehiclesList"  [(value)]="vehicle.$key">
             {{ vehicle.brand }} {{ vehicle.model }}
           </mat-option>
         </mat-select>
@@ -26,19 +28,18 @@
 </mat-menu>
 
 <mat-sidenav-container>
+
   <mat-sidenav position="start" mode="side" #sidenav>
-      
     <button mat-menu-item>Dodaj poniesione koszty z pojazdem</button>
-    <button mat-menu-item>Wyświetl wszystkie wpisy</button>
-
+    <button mat-menu-item routerLink="/registrationToApprove">Wyświetl wszystkie wpisy do zatwierdzenia</button>
+    <button mat-menu-item>Wyświetl wszystkie zatwierdzone wpisy</button>
   </mat-sidenav>
-<div *ngIf="selected">
 
-  
-      <router-outlet></router-outlet>
+  <div *ngIf="selected">
+    <router-outlet></router-outlet>
   </div>
 
   <p>{{vehiclesList}}</p>
   <p>{{vehiclesList | json}}</p>
-  
+
 </mat-sidenav-container>

@@ -4,7 +4,7 @@
     <p>
       <mat-form-field>
           <input matInput  placeholder="Choose a date" name="date"
-           #name="ngModel" 
+           #name="ngModel"
            [matDatepicker]="picker"
 
            [(ngModel)]="registrationService.selectedRegistration.date">
@@ -14,7 +14,7 @@
       </p>
       <p>
       <mat-form-field>
-          <input matInput type="text" placeholder="Cel wyjazdu" name="purpose" #name="ngModel" 
+          <input matInput type="text" placeholder="Cel wyjazdu" name="purpose" #name="ngModel"
           [(ngModel)]="registrationService.selectedRegistration.purpose" />
           <!-- [formControl]="emailFormControl"
           [errorStateMatcher]="matcher" -->
@@ -27,18 +27,31 @@
       </mat-form-field>
       </p>
       <p>
+        <mat-form-field>
+            <input matInput type="text" placeholder="Skąd" name="fromWhere" #name="ngModel"
+            [(ngModel)]="registrationService.selectedRegistration.fromWhere" />
+        </mat-form-field>
+        </p>
+      <p>
+      <p>
+        <mat-form-field>
+            <input matInput type="text" placeholder="Dokąd" name="toWhere" #name="ngModel"
+            [(ngModel)]="registrationService.selectedRegistration.toWhere" />
+        </mat-form-field>
+        </p>
+      <p>
     <mat-form-field>
-      <input matInput type="number" placeholder="Stan licznika początkowy" name="initial_odometer" #name="ngModel" 
+      <input matInput type="number" placeholder="Stan licznika początkowy" name="initial_odometer" #name="ngModel"
       [(ngModel)]="registrationService.selectedRegistration.initial_odometer" />
     </mat-form-field>
   </p>
   <p>
     <mat-form-field>
-      <input matInput type="number" placeholder="Stan licznika końcowy" name="final_odometer" #name="ngModel" 
+      <input matInput type="number" placeholder="Stan licznika końcowy" name="final_odometer" #name="ngModel"
       [(ngModel)]="registrationService.selectedRegistration.final_odometer"/>
     </mat-form-field>
   </p>
-  
+
   <button mat-raised-button color="primary">Zapisz</button>
 </form>
 </mat-card>
