@@ -1,6 +1,6 @@
 export class Registration {
     $key: string;
-    date: Date;
+    reg_date: string;
     purpose: string;
     fromWhere: string;
     toWhere: string;
@@ -12,5 +12,10 @@ export class Vehicle {
     $key: string;
     brand: string;
     model: string;
-    stateCosts: number;
+    ratePerKm: number;
+}
+
+export class Setting {
+    //$key: string;
+    ratesPerKm: number[]
 }

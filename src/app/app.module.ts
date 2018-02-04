@@ -21,7 +21,7 @@ import { SummaryComponent } from './registrations/summary/summary.component';
 const appRoutes: Routes = [
   // { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
 
-  { path: 'routeRegistration', component: RegistrationComponent},
+  { path: 'registration', component: RegistrationComponent},
   { path: 'summary', component: SummaryComponent},
   { path: 'registrationToApprove', component: RegistrationListComponent},
 

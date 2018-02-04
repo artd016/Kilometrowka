@@ -3,11 +3,11 @@
   <input type="hidden" name="$key" #$key="ngModel" [(ngModel)]="registrationService.selectedRegistration.$key">
     <p>
       <mat-form-field>
-          <input matInput  placeholder="Choose a date" name="date"
+          <input matInput  placeholder="Wybierz date" name="reg_date"
            #name="ngModel"
            [matDatepicker]="picker"
 
-           [(ngModel)]="registrationService.selectedRegistration.date">
+           [(ngModel)]="registrationService.selectedRegistration.reg_date">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>

@@ -39,7 +39,7 @@ set selected(value: String) {
               public dialog: MatDialog) { }
 
   ngOnInit() {
-
+    this.registrationService.getRatesPerKm();//TODO: looking for best location
     const vehicles = this.registrationService.getVehicles();
     vehicles.snapshotChanges().subscribe(item => {
      this.vehiclesList = [];
@@ -52,9 +52,12 @@ set selected(value: String) {
   }
 
   openDialog(): void {
+
+    let abc = this.registrationService.setting.ratesPerKm;
+
     const dialogRef = this.dialog.open(VehicleDialogComponent, {
       width: '250px',
-      data: { /*this.realEstateWebsiteService.selectedRealEstateWebsite*/ }
+      data: { ratesPerKm: this.registrationService.setting.ratesPerKm }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -83,6 +86,17 @@ set selected(value: String) {
     <input matInput tabindex="1" placeholder="Model"
     [(ngModel)]="data.model">
   </mat-form-field>
+
+    <mat-form-field>
+  <mat-select tabindex="1" [(ngModel)]="data.ratePerKm" name="rate" placeholder="Stawka za km przebiegu">
+  <mat-option *ngFor="let rate of data.ratesPerKm" [value]="i">
+    {{ rate }}
+  </mat-option>
+</mat-select>
+</mat-form-field>
+
+  <p>{{data.ratesPerKm | json}}</p>
+
   </mat-dialog-content>
 
   <div mat-dialog-actions>
@@ -91,12 +105,29 @@ set selected(value: String) {
     </button>
     <button mat-button (click)="onNoClick()" tabindex="-1">Cancel</button>
   </div>`
+
+
+
+
+
+//   <mat-form-field style="font-size: 20px;">
+//   <mat-select placeholder="Selected car" [(ngModel)]="selected" name="vehicle">
+
+//     <mat-option *ngFor="let vehicle of vehiclesList"  [(value)]="vehicle.$key">
+//       {{ vehicle.brand }} {{ vehicle.model }}
+//     </mat-option>
+//   </mat-select>
+// </mat-form-field>
 })
+
+//https://stackoverflow.com/questions/41396435/how-to-iterate-object-keys-using-ngfor
+
 export class VehicleDialogComponent {
 
-  constructor(
-    public dialogRef: MatDialogRef<VehicleDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
+  constructor(public dialogRef: MatDialogRef<VehicleDialogComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: any) { 
+  }
+
 
   onNoClick(): void {
     this.dialogRef.close();

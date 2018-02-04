@@ -38,6 +38,7 @@ export class RegistrationComponent implements OnInit {
   onSubmit(form: NgForm) {
     if (form.value.$key === '') {
       this.registrationService.insertRegistration(form.value, this.vehicle_key);
+      console.log(form.value.reg_date);
       this.router.navigate(['/summary']);
     } else {
       this.registrationService.updateRegistration(form.value);
@@ -53,7 +54,7 @@ export class RegistrationComponent implements OnInit {
 
     this.registrationService.selectedRegistration = {
       $key: '',
-      date: null,
+      reg_date: '',
       purpose: '',
       fromWhere: '',
       toWhere: '',
